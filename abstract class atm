@@ -13,3 +13,79 @@ class ATM(ABC):
     @abstractmethod
     def deposite():
         pass
+
+class User(ATM):
+    def __init__(self, password, balence):
+        self.__balence = 0
+        self.__password = None
+
+    def create_account(self, password):
+        self.__password = password
+        return 'Account is created: '
+ 
+    def authenticate(self, password):
+        entered = input('enter your password: ')
+        return entered == self.__password
+
+    def cheack_balence(self, password):
+        if not self.authenticate:
+            return 'incorrect password'
+        else:
+            print(f'balence: {self.__balence}')
+    def withdraw(self, amount):
+        if not self.authenticate:
+            print('incorrect password')  
+            return
+            
+        if amount <= self.__balence:
+            self.__balence -= amount
+            print('widrawal successful')
+        else:
+            print('insufficient balence')
+        
+    def deposite(self, amount):
+        if not self.authenticate:
+            return 'incorrect password'
+
+        self.__balence += amount
+        return'deposite successful'
+
+def main():
+    atm = User()
+
+def main():
+    atm = User(None,0)
+    print('welcome to python ATM')
+    password = input('enter your password: ')
+    atm.create_account(password)
+    while True:
+        print('ATM menu')
+        print('enter 1 to check balence: ')
+        print('enter 2 to withdraw: ')
+        print('enter 3 to deposite: ')
+        print('enter 4 to exit: ')
+
+        choice = input('enter your choice: ')
+
+
+        if choice == '1':
+            password = input('enter your password: ')
+            atm.cheack_balence(password)
+
+        elif choice == '2':
+            amt = int(float(input('enter ammount: ')))
+            #password = input('enter your password: ')
+
+            atm.authenticate(password)
+            atm.withdraw(amt)
+        elif choice == '3':
+            amt = int(float(input('enter ammount to deposite: ')))
+            atm.authenticate(password)
+            atm.deposite(amt)
+
+        elif choice == '4':
+            print('thank you')
+            break
+
+        else:
+            print('invalid choice')
